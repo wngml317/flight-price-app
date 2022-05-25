@@ -1,1 +1,1 @@
-# flight-price-app
+# streamlit-flight-price-app
