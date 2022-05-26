@@ -15,16 +15,20 @@ def run_ml() :
     scaler_y = joblib.load('data/scaler_y.pkl')
     ct = joblib.load('data/ct.pkl')
 
+
     airline_list = list(df['airline'].unique())
     airline = st.selectbox('항공선을 선택해주세요', airline_list)
+    st.write('')
 
     stops = st.number_input('출발지와 목적지 도시 간의 경유지 수', min_value=0, max_value=5)
+    st.write('')
 
     seat_choice = st.radio('좌석 클래스를 선택해주세요.', ['Economy', 'Business'])
     if seat_choice == 'Economy' :
         seat = 0 
     elif seat_choice == 'Business' :
         seat = 1
+    st.write('')
 
     dep_list = list(df['source_city'].unique())
     arr_list = list(df['destination_city'].unique())
@@ -33,18 +37,23 @@ def run_ml() :
     today = date.today()
     days_left = (day-today).days
 
-    st.subheader('출발 정보')
-    dep_city = st.selectbox('출발 도시를 선택하세요.', dep_list)
-    st.time_input("출발 시간을 입력하세요.", datetime.time())
 
-    st.subheader('도착 정보')
-    arr_city = st.selectbox('도착 도시를 선택하세요.', arr_list)
-    st.time_input("도착 시간을 입력하세요.", datetime.time())
+
+    st.subheader('출발 / 도착 정보')
+    cols = st.columns((1,1))
+    dep_city = cols[0].selectbox('출발 도시를 선택하세요.', dep_list)
+    arr_city = cols[1].selectbox('도착 도시를 선택하세요.', arr_list)
+    
+    #cols2 = st.columns((1, 1))
+    cols[0].time_input("출발 시간을 입력하세요.", datetime.time())
+    cols[1].time_input("도착 시간을 입력하세요.", datetime.time())
+    
 
     # 지속시간 : 출발 도시와 도착 도시, 경유 수를  구한 후, 지속시간의  평균을 구한다. 
     duration = df.loc[(df['source_city'] == dep_city) & (df['destination_city'] == arr_city) & (df['stops'] == stops), 'duration']
     duration = round(duration.mean(), 2)
-    
+    st.write('')
+
     if st.button('예측 시작하기') :
         new_data = np.array([airline, stops, seat, duration, days_left])
         
@@ -59,6 +68,9 @@ def run_ml() :
         y_pred = scaler_y.inverse_transform(y_pred)
         y_pred = round(y_pred[0,0])
 
-        st.write("예측한 항공권 가격은 " + str(y_pred) + "원 입니다.")
+        # 환율 계산 : 달러 -> 원
+        won = round(y_pred/0.00079)
+
+        st.write("예측한 항공권 가격은 " + str(won) + "원 입니다.")
 
     

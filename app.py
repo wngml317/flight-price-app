@@ -5,7 +5,7 @@ from app_home import run_home
 from app_ml import run_ml
 
 def main() :
-    st.title('항공권 가격 예측 앱')
+    st.title('🛫 항공권 가격 예측 앱')
 
     menu = ['Home', 'EDA', 'ML']
     choice = st.sidebar.selectbox('메뉴를 선택하세요.', menu)
