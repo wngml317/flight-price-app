@@ -1,3 +1,5 @@
+<meta charset="UTF-8">
+
 # 📑 데이터 정보
 
 - airline : 항공사 이름, 6개의 다른 항공사.
