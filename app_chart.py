@@ -4,14 +4,13 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import plotly.express as px
 
-from app_edit import edit_txt
 
 def run_chart() :
 
     df = pd.read_csv('data/Flight_Dataset.csv', index_col=0)
     
     st.write('')
-    edit_txt('컬럼들 간의 상관계수 확인하기')
+    st.markdown('##### 컬럼들 간의 상관계수 확인하기')
     cor_list = ['stops', 'class', 'duration', 'days_left', 'price']
     selected_list = st.multiselect('컬럼을 2개 이상 선택하세요', cor_list)
    

@@ -10,9 +10,6 @@ from datetime import date
 from datetime import datetime as dtt
 import datetime
 
-
-from app_edit import edit_txt
-
 def run_ml() :
     st.subheader('항공권 가격 예측 페이지입니다.')
 
@@ -46,7 +43,7 @@ def run_ml() :
     days_left = (day-today).days
     
 
-    edit_txt('출발 / 도착 정보')
+    st.markdown('##### 출발 / 도착 정보')
     cols = st.columns((1,1))
     dep_city = cols[0].selectbox('출발 도시를 선택하세요.', dep_list)
     arr_city = cols[1].selectbox('도착 도시를 선택하세요.', arr_list)
