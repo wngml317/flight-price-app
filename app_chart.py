@@ -25,7 +25,7 @@ def run_chart() :
         st.pyplot(fig)
 
 
-    
+    st.write('')
     airline_sorted = df['airline'].value_counts()
     fig1 = px.bar(airline_sorted, title='가장 많이 사용하는 항공사')
     st.plotly_chart(fig1)
