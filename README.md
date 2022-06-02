@@ -27,8 +27,8 @@
       
 🛠 Tech
 ----
-#### 언어 : Python
-#### 개발환경 : Colab, VSCode
-#### 배포 : AWS, Streamlit
+#### Language : Python
+#### Development Environment : Colab, VSCode
+#### Deploy : AWS, Streamlit
 
 http://15.164.232.85:8504/
