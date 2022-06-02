@@ -11,8 +11,8 @@ def run_chart() :
     
     st.write('')
     st.markdown('##### 컬럼들 간의 상관계수 확인하기')
-    cor_list = ['stops', 'class', 'duration', 'days_left', 'price']
-    selected_list = st.multiselect('컬럼을 2개 이상 선택하세요', cor_list)
+    col_list = ['stops', 'class', 'duration', 'days_left', 'price']
+    selected_list = st.multiselect('컬럼을 2개 이상 선택하세요', col_list)
    
     if len(selected_list) > 1 :
 

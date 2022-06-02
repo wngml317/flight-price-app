@@ -1,14 +1,10 @@
-from ast import IsNot
-from faulthandler import disable
-from logging import PlaceHolder
+
 import streamlit as st
 import pandas as pd
 import numpy as np
 import joblib
 import datetime 
 from datetime import date
-from datetime import datetime as dtt
-import datetime
 
 def run_ml() :
     st.subheader('항공권 가격 예측 페이지입니다.')
@@ -25,6 +21,7 @@ def run_ml() :
     airline = st.selectbox('항공선을 선택해주세요', airline_list)
     st.write('')
 
+    # 경유지 수의 최소값을 0으로 설정해준다.
     stops = st.number_input('출발지와 목적지 도시 간의 경유지 수', min_value=0, max_value=5)
     st.write('')
 
@@ -47,57 +44,57 @@ def run_ml() :
     cols = st.columns((1,1))
     dep_city = cols[0].selectbox('출발 도시를 선택하세요.', dep_list)
     arr_city = cols[1].selectbox('도착 도시를 선택하세요.', arr_list)
-
-
-    # 지속시간 : 출발 도시와 도착 도시, 경유 수를  구한 후, 지속시간의  평균을 구한다. 
-    duration = df.loc[(df['source_city'] == dep_city) & (df['destination_city'] == arr_city) & (df['stops'] == stops), 'duration']
-    duration = round(duration.mean(), 2)
-    st.write('')
-
-
-    # 도착 시간은 구한 지속시간을 출발 시간에 더해준다.
-    dep_time = cols[0].time_input("출발 시간", datetime.time())
     
-    # 구한 지속 시간에서 시, 분을 구하고
-    dur_H = int(duration)
-    dur_M = int(round((duration - dur_H) * 100, -1))
-
-    # 출발 시간의 시, 분과 더하여 도착 시간을 구한다.
-    arr_H = dep_time.hour + dur_H
-    arr_M = dep_time.minute + dur_M
+    # 출발 도시와 도착 도시를 똑같이 선택했을 경우 : Error
+    if dep_city == arr_city :
+        st.error('Error :: 서로 다른 도시를 선택해주세요')
     
-    # 분 단위가 60을 넘을 경우 시간을 다시 계산해준다.
-    if arr_M >= 60 :
-        arr_H = arr_H + (arr_M//60)
-        arr_M = arr_M % 60
-        arr_time = datetime.time(arr_H, arr_M)
     else :
-        arr_time = datetime.time(arr_H, arr_M)
-    
-    cols[1].text_input("도착 시간", arr_time, disabled=True)
-    
-    
+
+        # 지속시간 : 출발 도시와 도착 도시, 경유 수를  구한 후, 지속시간의  평균을 구한다. 
+        duration = df.loc[(df['source_city'] == dep_city) & (df['destination_city'] == arr_city) & (df['stops'] == stops), 'duration']
+        duration = round(duration.mean(), 2)
+        st.write('')
 
 
-
-
-    if st.button('예측 시작하기') :
-        new_data = np.array([airline, stops, seat, duration, days_left])
+        # 도착 시간은 구한 지속시간을 출발 시간에 더해준다.
+        dep_time = cols[0].time_input("출발 시간", datetime.time())
         
-        print(new_data)
-        new_data = new_data.reshape(1, 5)
-        new_data = ct.transform(new_data)
+        # 구한 지속 시간에서 시, 분을 구하고
+        dur_H = int(duration)
+        dur_M = int(round((duration - dur_H) * 100, -1))
 
-        new_data = scaler_X.transform(new_data)
+        # 출발 시간의 시, 분과 더하여 도착 시간을 구한다.
+        arr_H = dep_time.hour + dur_H
+        arr_M = dep_time.minute + dur_M
+        
+        # 분 단위가 60을 넘을 경우 시간을 다시 계산해준다.
+        if arr_M >= 60 :
+            arr_H = arr_H + (arr_M//60)
+            arr_M = arr_M % 60
+            arr_time = datetime.time(arr_H, arr_M)
+        else :
+            arr_time = datetime.time(arr_H, arr_M)
+        
+        cols[1].text_input("도착 시간", arr_time, disabled=True)
+    
+    
 
-        y_pred = regressor.predict(new_data)
 
-        y_pred = scaler_y.inverse_transform(y_pred)
-        y_pred = round(y_pred[0,0])
+        if st.button('예측 시작하기') :
+            new_data = np.array([airline, stops, seat, duration, days_left])
+            
+            print(new_data)
+            new_data = new_data.reshape(1, 5)
+            new_data = ct.transform(new_data)
 
-        # 환율 계산 : 달러 -> 원
-        # won = round(y_pred/0.00079)
+            new_data = scaler_X.transform(new_data)
 
-        # st.write("예측한 항공권 가격은 " + str(won) + "원 입니다.")
-        st.write("예측한 항공권 가격은 " + str(y_pred) + "달러 입니다.")
+            y_pred = regressor.predict(new_data)
+
+            y_pred = scaler_y.inverse_transform(y_pred)
+            y_pred = round(y_pred[0,0])
+
+            st.write('')
+            st.info("예측한 항공권 가격은 " + str(y_pred) + "달러 입니다.")
     
