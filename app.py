@@ -12,7 +12,7 @@ def main() :
     
     st.markdown('---')
 
-    menu = ['Home', 'EDA', 'Chart', 'ML']
+    menu = ['Home', 'Data Analysis', 'Chart', 'Flight Price Predict']
     choice = st.sidebar.selectbox('메뉴를 선택하세요.', menu)
 
     if choice == menu[0] :
