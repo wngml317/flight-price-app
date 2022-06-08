@@ -7,7 +7,8 @@ import datetime
 from datetime import date
 
 def run_ml() :
-    st.subheader('항공권 가격 예측 페이지입니다.')
+    st.subheader('항공권 가격 예측 페이지')
+    st.write('')
 
     df = pd.read_csv('data/Flight_Dataset.csv')
 
