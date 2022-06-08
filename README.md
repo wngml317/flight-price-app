@@ -47,4 +47,5 @@ AWS, Streamlit
 
 <br>
 
+
 ![predict](https://user-images.githubusercontent.com/70615959/172402805-42e89c90-d5a3-4e3e-8ced-d42e77b8b0c5.gif)
