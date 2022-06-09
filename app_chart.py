@@ -29,7 +29,7 @@ def run_chart() :
     with st.expander('📌 가장 많이 이용하는 항공사 확인하기') : 
         airline_sorted = df['airline'].value_counts()
         df_airline = pd.DataFrame({'airline' : airline_sorted.index, 'values' : airline_sorted.values})
-        fig1 = px.bar(df_airline, x='airline', y='values')
+        fig1 = px.bar(df_airline, x='airline', y='values', width=680)
         st.plotly_chart(fig1)
 
 
@@ -37,7 +37,7 @@ def run_chart() :
     with st.expander('📌 가장 많은 출발 시간 대 확인하기') : 
         dep_sorted = df['departure_time'].value_counts()
         df_dep = pd.DataFrame({'departure_time' : dep_sorted.index, 'values' : dep_sorted.values})
-        fig2 = px.bar(df_dep, x='departure_time', y='values')
+        fig2 = px.bar(df_dep, x='departure_time', y='values', width=680)
         st.plotly_chart(fig2)
 
 
