@@ -6,7 +6,38 @@
 > 머신러닝에 활용한 데이터셋은 'Ease My Trip' 웹사이트에서 제공한 2022년 2월 11일부터 3월 31일까지 수집된 항공권 예약 데이터입니다. 
 >   > 📃 Dataset : https://www.kaggle.com/datasets/shubhambathwal/flight-price-prediction       
 
+<br>
+  
+Data Column
+-----
+- airline : 항공사 이름, 6개의 다른 항공사
+- flight : 비행 코드
+- source_city : 항공편이 출발하는 도시, 6개의 고유한 도시
+- departure_time : 출발 시간, 기간을 그룹화하여 생성 한 6개의 고유한 시간
+- stops : 출발지와 목적지 도시 간의 경유지 수
+- arrival_time : 도착 시간, 기간을 그룹화하여 생성한 6개의 고유한 시간
+- destination_city : 목적지 도시, 항공편이 착륙할 6개의 고유한 도시
+- class : 좌석 클래스, 비즈니스와 이코노미
+- duration : 소요 시간, 도시 간 이동에 걸리는 전체 시간을 시간 단위로 표시  
+- days_left : 여행일에서 예약일을 뺀 남은 일수
+- price : 티켓 가격 정보
 
+<br>
+
+<!--
+데이터 전처리
+---------
+### 예측할 때 사용한 컬럼
+- 항공사 : One-Hot Encoding을 사용하여 문자열 값들을 숫자형으로 인코딩
+- 경유지 수 : 2개 이상인 경유지는 2로 처리
+- 좌석 클래스 : 0은 이코노미, 1은 비즈니스로 처리
+- 남은 일수 : 여행일을 선택할 경우 오늘 날짜를 기준으로 뺀 날짜를 구한다.
+- 소요시간 : 데이터셋에서 출발도시와 도착도시의 소요시간의 평균
+
+
+ 
+Transform후 ColumnTransformer에서 적용한 변수 순서를 맞춰준다.
+-->
 
 <!--
 
