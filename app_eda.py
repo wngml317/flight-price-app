@@ -10,6 +10,10 @@ def run_eda() :
     st.write('')
     df = pd.read_csv('data/Flight_Dataset.csv', index_col=0)
 
+    st.markdown("##### 가공 후 항공권 데이터")
+    st.dataframe(df)
+    st.write('')
+
     st.markdown("##### 데이터 통계량")
     with st.expander('데이터 통계량 확인하기') : 
         st.dataframe(df.describe())
